@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import HomeLayout from './Templates/HomeLayout'
+import Home from "./Templates/Home";
+import Sepet from './Templates/Sepet'
+import AuthLayout from './Templates/AuthLayout'
+import SignIn from './Templates/SignIn'
+import SignUp from './Templates/SignUp'
+import { Provider } from "react-redux";
+import { Store } from './Features/Store'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={Store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeLayout />}>
+            <Route index={true} element={<Home />} />
+            <Route path="sepet" element={<Sepet />} />
+            <Route path='/auth' element={<AuthLayout />}>
+              <Route index={true} element={<SignIn />} />
+              <Route path='signup' element={<SignUp />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider >
   );
 }
 

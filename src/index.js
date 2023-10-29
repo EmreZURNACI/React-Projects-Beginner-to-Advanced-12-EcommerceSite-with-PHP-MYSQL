@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ChakraProvider } from '@chakra-ui/react'
+import ModalProvider from './Features/ModalContext';
+import LogedProvider from './Features/LogContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient({
+  refetchOnWindowFocus: false,
+})
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <LogedProvider>
+    <ModalProvider>
+      <ChakraProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </ChakraProvider>
+    </ModalProvider>
+  </LogedProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
